@@ -18,7 +18,7 @@ Group 14: Jonathan Norton, Robyn Wilson, Arinze Abanah
 | 3e | Mutexes | Jonathan Norton, Arinze Abanah |
 | 3f | Scheduling algorithm | Jonathan Norton, Robyn Wilson, Arinze Abanah |
 
-After the project (actual):
+### After the project (actual):
 
 All three members worked together on most parts and helped each other as needed.
 The assignments above were the starting point and shifted as the work progressed.
