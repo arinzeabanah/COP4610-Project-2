@@ -74,7 +74,7 @@ TODO
 
 ### Robyn Wilson
 
-- Created empty.c and part1.c and captured the strace output
+- Format the README.md 
 - Worked on the my_timer module
 - Implemented pet structs and per-floor linked lists
 - Worked on the /proc/elevator output
