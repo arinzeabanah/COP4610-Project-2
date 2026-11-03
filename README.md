@@ -5,7 +5,7 @@ Group 14: Jonathan Norton, Robyn Wilson, Arinze Abanah
 
 ## Division of Labor
 
- Before the project (planned, submitted 10/9/26):
+### Before the project (planned, submitted 10/9/26):
 
 | Part | Description | Members |
 |------|-------------|---------|
