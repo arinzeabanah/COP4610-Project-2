@@ -1,20 +1,18 @@
-CC := gcc
+obj-m += syscheck.o
 
-all: empty part1
+all: syscheck.ko test-syscalls
 
-empty: empty.c
-	$(CC) -o empty empty.c
+run:
+	./test-syscalls
 
-part1: part1.c
-	$(CC) -o part1 part1.c
+test_syscalls: test-syscalls.c test-syscalls.h
+	gcc test-syscalls -o test_syscalls
 
-# Regenerates both trace files. part1.trace should have five more lines.
-trace: all
-	strace -o empty.trace ./empty
-	strace -o part1.trace ./part1
-	wc -l empty.trace part1.trace
+syscheck.ko: syscheck.c
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+.PHONY: all clean run
 
 clean:
-	rm -f empty part1
-
-.PHONY: all trace clean
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+	rm test-syscalls
