@@ -64,7 +64,78 @@ The assignments above were the starting point and shifted as the work progressed
 
 ## How to Compile and Run
 
-TODO
+Requirements
+`gcc`, `make`, and `strace`
+Kernel headers for the running kernel
+Part 3 requires Linux 6.16.12 built with system calls 548-550 (see Part 3 below).
+Parts 1 and 2 build on any recent kernel.
+Building everything
+From the repository root:
+```
+make
+```
+This builds all three parts. `make clean` removes executables and module build files.
+Part 1: System call tracing
+```
+cd part1
+make
+make trace
+```
+`make` builds the `empty` and `part1` executables. `make trace` runs both under `strace`,
+writes `empty.trace` and `part1.trace`, and prints their line counts. `part1.trace` has
+five more lines than `empty.trace`.
+Part 2: Timer kernel module
+```
+cd part2
+make
+sudo insmod my_timer.ko
+cat /proc/timer
+sleep 1
+cat /proc/timer
+sudo rmmod my_timer
+```
+`make` builds `my_timer.ko` in `part2/`. The first read of `/proc/timer` prints the current
+time. Each later read also prints the time elapsed since the previous read.
+Part 3: Elevator kernel module
+Kernel setup (one time). In the Linux 6.16.12 source:
+Copy `part3/syscalls.c` to `syscalls/syscalls.c` and create `syscalls/Makefile`
+containing `obj-y := syscalls.o`.
+Add entries 548, 549, and 550 to `arch/x86/entry/syscalls/syscall_64.tbl`.
+Declare the three system calls in `include/linux/syscalls.h`.
+Change `core-y :=` to `core-y := syscalls/` in the top-level `Makefile`.
+Run `make -j$(nproc)`, `sudo make modules_install`, `sudo make install`, and reboot.
+`uname -r` should print `6.16.12`.
+Check the system calls:
+```
+cd part3/tests/syscheck
+make
+sudo insmod syscheck.ko
+make run
+sudo rmmod syscheck
+```
+Build and load the elevator:
+```
+cd part3
+make
+sudo insmod elevator.ko
+```
+`make` builds `elevator.ko` in `part3/`. The elevator starts in the OFFLINE state.
+Run it (two terminals make this easier to watch):
+```
+cd part3/tests/elevator
+make
+./consumer --start
+./producer 20
+watch -n 1 cat /proc/elevator
+```
+`./producer N` issues N random requests. Requests with a floor outside 1-5 return 1.
+Stop and unload:
+```
+./consumer --stop
+sudo rmmod elevator
+```
+After `--stop`, the elevator delivers the pets on board, picks up no one new, then goes
+OFFLINE. Wait for OFFLINE before running `rmmod`.
 
 ## Development Log
 
