@@ -33,14 +33,13 @@ The assignments above were the starting point and shifted as the work progressed
 
 ```
 .
-├── README.md
-├── .gitignore
+
 ├── part1/
+│   ├── Makefile
 │   ├── empty.c
 │   ├── empty.trace
 │   ├── part1.c
-│   ├── part1.trace
-│   └── Makefile
+│   └── part1.trace
 ├── part2/
 │   ├── src/
 │   │   └── my_timer.c
@@ -48,8 +47,12 @@ The assignments above were the starting point and shifted as the work progressed
 ├── part3/
 │   ├── src/
 │   │   └── elevator.c
-│   ├── syscalls.c
-│   └── Makefile
+│   ├── Makefile
+│   └── syscalls.c
+├── .gitignore
+├──  Makefile
+├──  README.md
+
 ```
 
 - `part1/`: empty program and a program with exactly five added system calls,
